@@ -36,6 +36,36 @@
   border:2px #111 solid;
 }
 
+.playplace > .marriage{
+  width:24px;
+  height: 24px;
+  margin-left:2px;
+  margin-right:2px;
+  float:left;
+  border:2px #111 solid;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color:#333;
+
+}
+
+.playplace > .marriage:before{
+  content:'\1F517';
+  width:100%;
+  display:inline-block;
+  text-align: center;
+  font-size:11px;
+  color:#444;
+}
+
+.playplace > .marriage.active{
+  background-color:#bbb;
+}
+
+.playplace > .marriage.active:before{
+  color:#111 !important;
+}
+
 .playplace > .toggle > .arrows{
   float:left;
   height: 20px;
