@@ -1,19 +1,55 @@
 window.playplace = {};
 $(document).ready(function(){
-  $(document).on("click", "*", function(){
+  $(document).on("click", "*", function(e){
+    e.stopPropagation();
     el = $(this);
     if(el.is("body") || el.is("html") || el.parents(".playplace").length > 0 || el.is(".playplace")){
       return null;
     }
+    $("*").removeClass("playplace_chosen");
     el.addClass("playplace_chosen");
     window.playplace.el = el;
     window.playplace.height = el.height();
     window.playplace.width = el.width();
     height = el.height();
     $(".playplace_height input").val(height);
-    width = el.height();
+    width = el.width();
     $(".playplace_width input").val(width);
     console.log(window.playplace);
+  });
+
+  $(".playplace_width input").blur(function(){
+    val = $(this).val();
+    last = window.playplace.width;
+    window.playplace.width = val;
+    $(window.playplace.el).width(val);
+    console.log(window.playplace.width_height);
+    if(window.playplace.width_height == true){
+      dif =  val - last;
+      console.log(dif);
+      dif = dif / last;
+      console.log(dif);
+      dif = (dif * window.playplace.height) + window.playplace.height;
+      console.log(dif);
+      $(".playplace_height input").val(dif);
+      window.playplace.height = dif;
+      $(window.playplace.el).height(dif);
+    }
+  });
+
+  $(".playplace_height input").blur(function(){
+    val = $(this).val();
+    last = window.playplace.height;
+    window.playplace.height = val;
+    $(window.playplace.el).height(val);
+    if(window.playplace.width_height == true){
+      dif =  val - last;
+      dif = dif / last;
+      dif = (dif * window.playplace.width) + window.playplace.width;
+      $(".playplace_width input").val(dif);
+      window.playplace.width = dif;
+      $(window.playplace.el).width(dif);
+    }
   });
 
   window.playplace.interval = function(fnc){
@@ -104,8 +140,6 @@ $(document).ready(function(){
     );
   });
 
-
-
   $(".playplace_height .downarrow").mousedown(function(){
     window.playplace.acceleration = 200;
     window.playplace.engine(
@@ -117,9 +151,6 @@ $(document).ready(function(){
       }
     );
   });
-
-
-
 
   $(".playplace_width .uparrow").mousedown(function(){
     window.playplace.acceleration = 200;
